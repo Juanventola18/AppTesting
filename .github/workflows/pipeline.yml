@@ -26,9 +26,11 @@ jobs:
         # Si tenes un archivo requirements.txt lo usa, sino sigue de largo
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
+ 
     - name: Ejecutar Pruebas Automatizadas
       run: |
-        # Ejecuta los tests y genera el reporte HTML que pide la consigna
+        # Agregamos el punto para que busque en la raíz
+        export PYTHONPATH=$PYTHONPATH:.
         pytest --html=reporte_final.html --self-contained-html
 
     - name: Subir Reporte como Artefacto
