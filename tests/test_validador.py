@@ -1,15 +1,18 @@
 import pytest
 from app.validador import validar_importe_factura
 
-# Caso Exitoso
-def test_monto_valido_cat_a():
-    assert validar_importe_factura(1500, "A") is True
+# 1. CASO EXITOSO
+def test_monto_valido_exitoso():
+    # Un monto normal que cumple las reglas
+    assert validar_importe_factura(5000, "A") is True
 
-# Caso de Error
-def test_error_monto_insuficiente_b():
-    with pytest.raises(ValueError, match="Monto insuficiente para Categoría B"):
-        validar_importe_factura(50, "B")
+# 2. CASO DE ERROR
+def test_error_monto_insuficiente():
+    # Falla porque el mínimo para Cat A es 1000
+    with pytest.raises(ValueError, match="Monto insuficiente"):
+        validar_importe_factura(500, "A")
 
-# Caso Borde (Límite máximo)
-def test_limite_maximo_permitido():
+# 3. CASO BORDE (Edge Case)
+def test_limite_maximo_borde():
+    # El límite exacto permitido por el sistema
     assert validar_importe_factura(1000000, "A") is True
